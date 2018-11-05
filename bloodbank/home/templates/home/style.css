@@ -1,18 +1,3 @@
-body {background-image: url("pagewall.jpg");
-	width: 100%;
-	height: 4000px;
-	background-repeat: no-repeat;
-
-
-
+body {
+    background: white url("images/bg.jpg");
 }
-
-a:hover{
-	background-color: #fe3452;
-	color: #232345;
-	text-decoration: none;
-  }
-  .list-group-item {
-	background-color: cyan
-  
-  }

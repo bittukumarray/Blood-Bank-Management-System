@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+#from django.conf import settings
+
+#settings.configure()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -33,6 +37,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'pathlab.apps.PathlabConfig',
     'home.apps.HomeConfig',
+    'finddonor.apps.FinddonorConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,13 +82,21 @@ WSGI_APPLICATION = 'bloodbank.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bloodbank',
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'db',
         'USER': 'root',
-        'PASSWORD': '1118209bittu',
-        'HOST': 'localhost'
+        'PASSWORD': 'riyamysql',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation

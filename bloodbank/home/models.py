@@ -80,6 +80,9 @@ class UserAddress(models.Model):
     date = models.DateTimeField(auto_now_add = True)
     blood = models.CharField(max_length=10, choices=Blood_Groups)
 
+    def __str__(self):
+        return self.user.username + ":" +self.blood
+
 class UserProfile(models.Model):
     userprofileid = models.AutoField(primary_key = True)
     user = models.OneToOneField(User,on_delete = models.CASCADE)
