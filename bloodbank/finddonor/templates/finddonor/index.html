@@ -3,16 +3,33 @@
     Find a potential donor
 {% endblock %}
 {% block body %}
-    <div style="margin: 200px">
-        <h2>Enter details</h2>
-        <div class="bg-warning" style="margin-top: 100px;margin-left: 20px;">
-            <h3>Find a donor near you:</h3>
-            <form action="{% url 'finddonor:detail' %}" method="post">
+    <h2 style="margin: 100px">
+        {% if sorry %}
+           <h2 style="color:white;">{{ sorry }}</h2>
+         {% else %}
+                <dl>
+                    {% for donor in result %}
+                        <dt>{{ donor.user.username }}
+                        <dd>
+                            Address: {{ donor.city }},{{ donor.state }}
+                        </dd>
+
+                        </dt>
+                    {% endfor %}
+                </dl>
+        {% endif %}
+        <h2 style="color: white;margin-top: 50px;">Enter details</h2>
+        <div class="bg-warning" style="margin-bottom: 100px;margin-left: 20px;">
+            <h3>Find donors:</h3>
+            <form action="" method="post">
                 {% csrf_token %}
-                <label for="blood">Blood group</label>
-                <input type="text" name="blood"><br>
-                <button type="submit" class="btn btn-success">Search..</button>
+                {% for field in form %}
+                    {{ field.errors }}
+                    <label>{{ field.label_tag }}</label>
+                    {{ field }}
+                {% endfor %}
                 <br>
+                <button type="submit" class="btn btn-success">Search..</button>
             </form>
         </div>
     </div>

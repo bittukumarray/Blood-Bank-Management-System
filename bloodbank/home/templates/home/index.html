@@ -1,83 +1,35 @@
-{#{% load static %}#}
-{#<!DOCTYPE HTML>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <title>Home Page</title>#}
-{##}
-{#    <meta charset="utf-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
-{##}
-{#    <!-- Latest compiled and minified CSS -->#}
-{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">#}
-{##}
-{#    <!-- jQuery library -->#}
-{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>#}
-{##}
-{#    <!-- Popper JS -->#}
-{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>#}
-{##}
-{#    <!-- Latest compiled JavaScript -->#}
-{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>#}
-{#    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"#}
-{#          type="text/css"/>#}
-{##}
-{#    <link rel="stylesheet" type="text/css" href="{% static 'home/style.css' %}">#}
-{#    <style>#}
-{##}
-{#    </style>#}
-{#</head>#}
-{#<body>#}
-{##}
-{##}
-{#    <div class="row">#}
-{#        <nav class="navbar col-12 bg-inverse bg-dark navbar-inverse navbar-expand-sm fixed-top">#}
-{#            <img src="{% static 'home/images/bloodlogo3.jpg' %}" class="navbar-brand col-2" width="400px" height="100px">#}
-{#            <a href="#" class="col-md-1.5 col-1 offset-1"></a>#}
-{#            <img src="{% static 'home/glyph2.jpg' %}"#}
-{#                 class="col-md-1 col-1 offset-1" width="70px" height="50px">#}
-{#            <span class="fa fa-phone"></span>#}
-{#            <p class="col-md-1 col-1 text-light">+917250073079</p>#}
-{#            <div class="offset-md-1 offset-2 col-md-3 col-3">#}
-{#                {% if user.is_authenticated %}#}
-{#                    <a href="{% url 'home:user_logout' %}" class="offset-md-9 offset-3 col-7">#}
-{#                        <button class="btn btn-outline-success">Logout</button>#}
-{#                    </a>#}
-{#                {% else %}#}
-{#                    <a href="{% url 'home:signup' %}" class="offset-2 col-3.5">#}
-{#                        <button class="btn btn-outline-danger">Register</button>#}
-{#                    </a>#}
-{#                    <a href="{% url 'home:login' %}" class="offset-md-2 offset-3 col-3.5">#}
-{#                        <button class="btn btn-outline-success">Login</button>#}
-{#                    </a>#}
-{##}
-{#                {% endif %}#}
-{#            </div>#}
-{##}
-{#        </nav>#}
-{#        <div>#}
-{#            <div class="row">#}
-{#                <nav class="navbar navbar-light navbar-expand-sm bg-light fixed-top fixed-top-2">#}
-{#                    <div class="container">#}
-{#                        <a class="navbar-brand" href="#">Brand</a>#}
-{#                        <ul class="navbar-nav mr-auto">#}
-{#                            <li class="nav-item"><a class="nav-link" href="{% url 'home:index' %}">Home</a></li>#}
-{#                            <li class="nav-item"><a class="nav-link" href="{% url 'home:about' %}">about</a></li>#}
-{#                            <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>#}
-{#                            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>#}
-{#                            <!--<li class="nav-item"><a class="nav-link" href="{% url 'home:signup' %}">Donor Register</a></li>#}
-{#    					<li class="nav-item"><a class="nav-link" href="{% url 'home:signup' %}">Acceptor Register</a></li>#}
-{#    				-->#}
-{#                        </ul>#}
-{#                    </div>#}
-{#                </nav>#}
-{##}
-{#            </div>#}
-
 {% extends 'home/base.html' %}
-            {% block title %}Blood donation{% endblock %}
+{% block head %}
+    <title>Home Page</title>
+    <style>
+        .btn-circle {
+            width: 200px;
+            height: 200px;
+            padding: 6px 0px;
+            border-radius: 100px;
+            border: whitesmoke;
+            text-align: center;
+            font-size: 30px;
+            line-height: 1.42857;
+            background-color: #ff9999;
+        }
+        a.btn-circle:hover{
+            font-size: 45px;
+        }
+
+    </style>
+{% endblock %}
+
 {% block body %}
-
-
+    <div class="container-fluid" id="n2">
+        <p class="text-center" id="head">BloodSource</p>
+    </div>
+    <a href="{% url 'finddonor:index' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="margin: 100px; opacity: 0.6;border: white;">Find donor</button>
+    </a>
+    <a href="{% url 'requestblood:index' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Request blood</button>
+    </a>
     {% if user.is_active %}
         <br>
         <br>
@@ -133,11 +85,9 @@
             </div>
         </div>
     {% endif %}
-    <div style="margin:100px;">
-        <a class="btn btn-success" href="{% url 'finddonor:index' %}">Request blood</a>
-    </div>
+    {#    <div style="margin:100px;">#}
+    {#        <a class="btn btn-success" href="{% url 'finddonor:index' %}">Request blood</a>#}
+    {#    </div>#}
 
 
 {% endblock %}
-{#        </body>#}
-{#</html>#}

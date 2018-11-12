@@ -12,13 +12,12 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-#from django.conf import settings
+# from django.conf import settings
 
-#settings.configure()
+# settings.configure()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -31,13 +30,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
     'pathlab.apps.PathlabConfig',
     'home.apps.HomeConfig',
     'finddonor.apps.FinddonorConfig',
+    'requestblood.apps.RequestbloodConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bloodbank.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -111,8 +109,6 @@ PASSWORD_HASHERS = [
 
 ]
 
-
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -128,7 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -142,8 +137,24 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# SEND_GRID_API_KEY = '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'
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'riya04'
+# EMAIL_HOST_PASSWORD = 'riyajain04'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'riyashachijain@gmail.com'
+# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Request for blood'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '29riyajain@gmail.com'
+EMAIL_HOST_PASSWORD = 'riyajain04'

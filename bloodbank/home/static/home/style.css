@@ -1,21 +1,30 @@
-body {background-image: url("pagewall3.jpg");
-	width: 100%;
-	height: 4000px;
-	background-repeat: no-repeat;
-	padding-top: 105px;
-	background-color: pink;
-	background-size: 100% 1200px;
+body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background: url("images/bloodbg.jpg");
+    /*background-attachment: fixed;*/
 }
 
-.fixed-top-2 {
-		margin-top: 110px;
-}
-
-a:hover{
-  background-color: dark;
-}
-
-.colorcyan {color:cyan;
+#n2 {
+    background: #ff944d;
+    height: 280px;
 
 
 }
+
+#footer {
+    margin-bottom: 0px;
+    color: white;
+
+}
+
+#head {
+    font-family: 'Roboto Slab', cursive;
+    font-size: 70px;
+    padding: 70px;
+    color: white;
+}
+
