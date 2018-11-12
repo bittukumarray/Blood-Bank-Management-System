@@ -1,0 +1,15 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+
+
+
+{% block body %}
+<br><br><br><br><br><br><br><br>
+<form class="form" action="{% url 'home:image_upload' %}" method="post" enctype="multipart/form-data">
+  {{image.as_ul}}
+  <input type="submit" value="Submit" class="btn btn-outline-success">
+{% csrf_token %}
+</form>
+
+{% endblock %}

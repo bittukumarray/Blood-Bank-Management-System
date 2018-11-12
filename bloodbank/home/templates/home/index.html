@@ -1,6 +1,6 @@
 {% extends 'home/base.html' %}
 {% block head %}
-    <title>Home Page</title>
+    <title>Blood Source | Home</title>
     <style>
         .btn-circle {
             width: 200px;
@@ -13,8 +13,22 @@
             line-height: 1.42857;
             background-color: #ff9999;
         }
-        a.btn-circle:hover{
+
+        a.btn-circle:hover {
             font-size: 45px;
+        }
+
+        #n2 {
+            background: #ff944d;
+            height: 340px;
+
+        }
+
+        #head {
+            font-family: 'Roboto Slab', cursive;
+            font-size: 70px;
+            padding: 100px;
+            color: white;
         }
 
     </style>
@@ -25,69 +39,11 @@
         <p class="text-center" id="head">BloodSource</p>
     </div>
     <a href="{% url 'finddonor:index' %}">
-        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="margin: 100px; opacity: 0.6;border: white;">Find donor</button>
+        <button type="button" class="btn btn-default btn-circle btn-lg" style="margin: 100px;opacity: 0.6;">Find donor</button>
     </a>
     <a href="{% url 'requestblood:index' %}">
-        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Request blood</button>
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Request blood
+        </button>
     </a>
-    {% if user.is_active %}
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="container">
-            <div class="row col-12">
-                <table class="table offset-3 col-12 colorcyan">
-                    <tr>
-                        <td>Username:</td>
-                        <td>{{ user.username }}</td>
-                    </tr>
-                    <tr>
-                        <td>Name:</td>
-                        <td>{{ user.get_full_name }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Email:</td>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <td>Phone:</td>
-                        <td>{{ user.donoraddress.phone }}</td>
-                    </tr>
-                    <tr>
-                        <td>State:</td>
-                        <td>{{ user.donoraddress.state }}</td>
-                    </tr>
-                    <tr>
-                        <td>City:</td>
-                        <td>{{ user.donoraddress.city }}</td>
-                    </tr>
-                    <tr>
-                        <td>Birth Date:</td>
-                        <td>{{ user.donoraddress.birth }}</td>
-                    </tr>
-                    <tr>
-                        <td>Gender:</td>
-                        <td>{{ user.donoraddress.gender }}</td>
-                    </tr>
-                    <tr>
-                        <td>Blood Group:</td>
-                        <td>{{ user.donoraddress.blood }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td><a href="#">Update Details</a></td>
-                    </tr>
-                </table>
-
-            </div>
-        </div>
-    {% endif %}
-    {#    <div style="margin:100px;">#}
-    {#        <a class="btn btn-success" href="{% url 'finddonor:index' %}">Request blood</a>#}
-    {#    </div>#}
-
 
 {% endblock %}

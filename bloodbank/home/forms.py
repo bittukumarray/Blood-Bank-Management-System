@@ -34,3 +34,21 @@ class UserAddressForm(forms.ModelForm):
     class Meta:
         model = UserAddress
         exclude = ['user','birth']
+
+class Upload_Image(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['image','status']
+
+
+
+class UpdateUser(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','email']
+
+
+class UploadAddress(forms.ModelForm):
+    class Meta:
+        model = UserAddress
+        exclude = ['user','birth','blood','gender']

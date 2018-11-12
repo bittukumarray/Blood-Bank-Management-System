@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('home/', include('home.urls')),
-    path('pathlab/', include('pathlab.urls')),
-    path('find-donor/', include('finddonor.urls')),
-    path('requestblood/',include('requestblood.urls')),
-    path('admin/', admin.site.urls),
-]
+                  path('home/', include('home.urls')),
+                  path('pathlab/', include('pathlab.urls')),
+                  path('admin/', admin.site.urls),
+                  path('find-donor/', include('finddonor.urls')),
+                  path('requestblood/', include('requestblood.urls')),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

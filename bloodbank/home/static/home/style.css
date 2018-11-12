@@ -5,26 +5,16 @@ body {
     margin: 0;
     padding: 0;
     background: url("images/bloodbg.jpg");
+    background-size: 100% 90%;
+    background-repeat: no-repeat;
+    #background-color: pink;
     /*background-attachment: fixed;*/
 }
 
-#n2 {
-    background: #ff944d;
-    height: 280px;
-
-
-}
 
 #footer {
     margin-bottom: 0px;
     color: white;
 
-}
-
-#head {
-    font-family: 'Roboto Slab', cursive;
-    font-size: 70px;
-    padding: 70px;
-    color: white;
 }
 

@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-# from django.conf import settings
-
-# settings.configure()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -33,10 +29,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'pathlab.apps.PathlabConfig',
-    'home.apps.HomeConfig',
     'finddonor.apps.FinddonorConfig',
     'requestblood.apps.RequestbloodConfig',
+    'pathlab.apps.PathlabConfig',
+    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -78,24 +74,24 @@ WSGI_APPLICATION = 'bloodbank.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'db',
-        'USER': 'root',
-        'PASSWORD': 'riyamysql',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'bloodbank',
+#         'USER': 'root',
+#         'PASSWORD': '1118209bittu',
+#         'HOST': 'localhost'
 #     }
 # }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -142,15 +138,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# SEND_GRID_API_KEY = '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'
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = 'riya04'
-# EMAIL_HOST_PASSWORD = 'riyajain04'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'riyashachijain@gmail.com'
-# ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Request for blood'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+MEDIA_URL = "/media/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'home/media')
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

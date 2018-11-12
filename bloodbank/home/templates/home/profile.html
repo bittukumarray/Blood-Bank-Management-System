@@ -1,0 +1,133 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+<title>webpage</title>
+<style media="screen">
+  .bodysize {background-color: rgba(145,40,40,0.6);
+    color:white;
+    height : 1200px;
+    width: 600px;
+  }
+
+  .avatar {
+    vertical-align: middle;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+</style>
+
+
+
+
+{% endblock %}
+
+
+
+{% block body %}
+<br><br><br>
+
+
+<div class="container bodysize justify-content-left">
+  <div class="row col-12">
+  <table class="table">
+    <tr>
+      <td>
+    {% if user.userprofile.image  %}
+
+    <a href="{% url 'home:image_upload' %}"><img width="300px" height="300px" src="{{user.userprofile.image.url}}"></a>
+    {% else %}
+        {% if user.useraddress.gender == "Female" %}
+        <a href="{% url 'home:image_upload' %}"><img src="{% static 'home/images/girlavatar.png' %}" alt="Avatar" class="avatar"></a>
+        {% else %}
+        <a href="{% url 'home:image_upload' %}"><img src="{% static 'home/images/boyavatar.png' %}" alt="Avatar" class="avatar"></a>
+        {% endif %}
+    {% endif %}
+
+
+  </td>
+  </tr>
+  <br>
+  <tr>
+    <th>Status:</th>
+    <td>
+    {{user.userprofile.status}}
+  </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="{% url 'home:image_upload' %}">Update Status</a></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+    <th>Personal details</th>
+    <td></td>
+  </tr>
+    <tr>
+    <td>Username:</td>
+    <td>{{user.username}}</td>
+    </tr>
+    <tr>
+    <td>Name:</td>
+    <td>{{user.get_full_name}}</td>
+    </tr>
+
+    <tr>
+    <td>Email:</td>
+    <td>{{user.email}}</td>
+    </tr>
+    <tr>
+    <td>Phone:</td>
+    <td>{{user.useraddress.phone}}</td>
+    </tr>
+    <tr>
+    <td>State:</td>
+    <td>{{user.useraddress.state}}</td>
+    </tr>
+    <tr>
+    <td>City:</td>
+    <td>{{user.useraddress.city}}</td>
+    </tr>
+    <tr>
+    <td>Birth Date:</td>
+    <td>{{user.useraddress.birth}}</td>
+    </tr>
+    <tr>
+    <td>Gender:</td>
+    <td>{{user.useraddress.gender}}</td>
+    </tr>
+    <tr>
+    <td>Blood Group:</td>
+    <td>{{user.useraddress.blood}}</td>
+    </tr>
+    <tr>
+      <td>
+      </td>
+      <br>
+    <td><a href="{% url 'home:update_details' %}">Update Details</a></td>
+    </tr>
+    <br><br>
+    <tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+    <th>Credits details</th>
+    <td></td>
+  </tr>
+      <tr>
+      <td>Current Credits:</td>
+      <td>{{user.wallet.credit}}</td>
+      </tr>
+
+  </table>
+
+</div>
+</div>
+
+
+{% endblock %}

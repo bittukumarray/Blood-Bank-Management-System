@@ -1,0 +1,19 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+
+
+
+{% block body %}
+<br><br><br><br><br><br><br><br>
+<form class="form" action="{% url 'home:update_details' %}" method="post">
+  {{userform.as_ul}}
+  {{addressform.as_ul}}
+  <input type="submit" value="Submit" class="btn btn-outline-success">
+{% csrf_token %}
+</form>
+
+
+
+
+{% endblock %}

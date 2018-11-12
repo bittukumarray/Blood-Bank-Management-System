@@ -29,7 +29,6 @@ function myfunct(){
     return false;
   }
   else{
-    alert("Hello " +$("#id_username").val() + ", You are successfully Registered.");
 		return true;
   }
 }
@@ -42,6 +41,20 @@ function myfunct(){
 <body>
 
 
+{% if user.is_authenticated %}
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Bhag Sale</h1>
+			<p>Hack krne ki koshish kr rhe ho beta</p>
+			<p>abhi chlna to sikh lo achhe se</p>
+
+		</div>
+
+	</div>
+
+
+
+{% else %}
 
   <div class="container">
   	<div class="jumbotron">
@@ -110,6 +123,6 @@ function myfunct(){
     </form>
   </div>
   <div>
-
+{% endif %}
 </body>
 </html>
