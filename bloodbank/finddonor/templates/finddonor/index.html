@@ -4,33 +4,74 @@
 {% endblock %}
 {% block body %}
     <h2 style="margin: 100px">
-        {% if sorry %}
-           <h2 style="color:white;">{{ sorry }}</h2>
-         {% else %}
-                <dl>
-                    {% for donor in result %}
-                        <dt>{{ donor.user.username }}
-                        <dd>
-                            Address: {{ donor.city }},{{ donor.state }}
-                        </dd>
+        {#        {% if sorry %}#}
+        {#           <h2 style="color:white;">{{ sorry }}</h2>#}
+        {#         {% else %}#}
+        {#                <dl>#}
+        {#                    {% for donor in result %}#}
+        {#                        <dt>{{ donor.user.username }}#}
+        {#                        <dd>#}
+        {#                            Address: {{ donor.city }},{{ donor.state }}#}
+        {#                        </dd>#}
+        {##}
+        {#                        </dt>#}
+        {#                    {% endfor %}#}
+        {#                </dl>#}
+        {#        {% endif %}#}
+        {% if result.count == 0 %}
+            <h2 style="">Sorry no donors found near you</h2>
 
-                        </dt>
-                    {% endfor %}
-                </dl>
+        {% else %}
+            {% for donor in result %}
+                <dt>{{ donor.user.username }}
+                <dd>
+                    Address: {{ donor.city }},{{ donor.state }}
+                </dd>
+
+                </dt>
+            {% endfor %}
         {% endif %}
-        <h2 style="color: white;margin-top: 50px;">Enter details</h2>
-        <div class="bg-warning" style="margin-bottom: 100px;margin-left: 20px;">
-            <h3>Find donors:</h3>
-            <form action="" method="post">
-                {% csrf_token %}
-                {% for field in form %}
-                    {{ field.errors }}
-                    <label>{{ field.label_tag }}</label>
-                    {{ field }}
-                {% endfor %}
-                <br>
-                <button type="submit" class="btn btn-success">Search..</button>
-            </form>
-        </div>
-    </div>
+
+{#        <h2 style="color: white;margin-top: 50px;">Enter details</h2>#}
+{#        <div class="bg-warning" style="margin-bottom: 100px;margin-left: 20px;">#}
+{#            <h3>Find donors:</h3>#}
+{#            <form action="" method="post">#}
+{#                {% csrf_token %}#}
+{#                {% for field in form %}#}
+{#                    {{ field.errors }}#}
+{#                    <label>{{ field.label_tag }}</label>#}
+{#                    {{ field }}#}
+{#                {% endfor %}#}
+{#                <br>#}
+{#                <button type="submit" class="btn btn-success">Search..</button>#}
+{#            </form>#}
+{#        </div>#}
+{#        </div>#}
+    <form method="post" id="findform" data-cities-url="{% url 'finddonor:ajax_load_cities' %}" novalidate>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <button type="submit">Save</button>
+    <a href="{% url 'finddonor:index' %}">Nevermind</a>
+  </form>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_state").change(function () {
+      var url = $("#findform").attr("data-cities-url");  // get the url of the `load_cities` view
+      var stateId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'state': stateId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_city").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
 {% endblock %}

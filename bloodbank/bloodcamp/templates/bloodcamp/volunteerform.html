@@ -1,0 +1,74 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+  <style media="screen">
+    .table{
+      margin-top:120px;
+      width:50%;
+
+
+    }
+  </style>
+
+{% endblock %}
+
+{% block body %}
+
+<form class="form" action="" method="post">
+  <table class="table">
+    <tr>
+      <td>Name:</td>
+      <td>{{volunteer.name}}</td>
+    </tr>
+    <tr>
+      <td>Email:</td>
+      <td>{{volunteer.email}}</td>
+    </tr>
+    <tr>
+      <td>State:</td>
+      <td>{{volunteer.state}}</td>
+    </tr>
+    <tr>
+      <td>City:</td>
+      <td>{{volunteer.city}}</td>
+    </tr>
+    <tr>
+      <td>Locality:</td>
+      <td>{{volunteer.locality}}</td>
+    </tr>
+    <tr>
+      <td>Land-Mark:</td>
+      <td>{{volunteer.landmark}}</td>
+    </tr>
+    <tr>
+      <td>House:</td>
+      <td>{{volunteer.house}}</td>
+    </tr>
+    <tr>
+      <td>Phone:</td>
+      <td>{{volunteer.phone}}</td>
+    </tr>
+    <tr>
+      <td>Gender:</td>
+      <td>{{volunteer.gender}}</td>
+    </tr>
+    <tr>
+      <td>Blood:</td>
+      <td>{{volunteer.blood}}</td>
+    </tr>
+    <tr>
+      <td>Blood Camp:</td>
+      <td>{{volunteer.bloodcamp}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Submit" class="btn btn-outline-success"></td>
+    </tr>
+  </table>
+  {% csrf_token %}
+
+</form>
+
+
+{% endblock %}

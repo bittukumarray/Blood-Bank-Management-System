@@ -14,14 +14,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+                  path('display/', include('display.urls')),
+                  path('credits/', include('credits.urls')),
                   path('home/', include('home.urls')),
                   path('pathlab/', include('pathlab.urls')),
                   path('admin/', admin.site.urls),
                   path('find-donor/', include('finddonor.urls')),
                   path('requestblood/', include('requestblood.urls')),
+                  path('availability/', include('availability.urls')),
+                  path('bloodcamp/', include('bloodcamp.urls')),
+                  path('donate/', include('donate.urls')),
+                  re_path(r'^', include('django.contrib.auth.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

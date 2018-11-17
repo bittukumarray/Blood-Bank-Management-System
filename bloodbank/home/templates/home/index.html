@@ -41,8 +41,16 @@
     <a href="{% url 'finddonor:index' %}">
         <button type="button" class="btn btn-default btn-circle btn-lg" style="margin: 100px;opacity: 0.6;">Find donor</button>
     </a>
-    <a href="{% url 'requestblood:index' %}">
-        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Request blood
+    <a href="{% url 'donate:index' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Donate now
+        </button>
+    </a>
+    <a href="{% url 'availability:index' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Check blood availability
+        </button>
+    </a>
+    <a href="{% url 'bloodcamp:camphome' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">BloodCamps
         </button>
     </a>
 

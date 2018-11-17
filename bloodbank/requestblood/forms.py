@@ -1,8 +1,8 @@
 from django.forms import ModelForm
-from home.models import Requestor
+from .models import Requestor
 
 
 class RequestorForm(ModelForm):
     class Meta:
         model = Requestor
-        fields = ['name', 'blood', 'city','phone', 'email', 'reason']
+        fields = ['name', 'state', 'city', 'phone', 'email', 'reason']
