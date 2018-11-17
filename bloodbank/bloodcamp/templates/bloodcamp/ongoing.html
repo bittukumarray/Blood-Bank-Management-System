@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
     <meta charset="utf-8">
     <title>Upcoming</title>
-  </head>
-  <body>
-    <h1>U have come to Ongoing page</h1>
+{% endblock %}
+{% block body %}
+    <h1>Ongoing Camps</h1>
     {% if camps %}
     <table>
       <tr>
@@ -47,7 +47,8 @@
       {% endif %}
       {% endfor %}
      </table>
+    {% else %}
+        <p>No Ongoing Camps</p>
     {% endif %}
     <h2><a href="{% url 'bloodcamp:camphome' %}" style="text-decoration:none">Back</a></h2>
-  </body>
-</html>
+{% endblock %}

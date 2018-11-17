@@ -1,4 +1,5 @@
 {% extends 'home/base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}
     Find a potential donor
 {% endblock %}
@@ -19,15 +20,17 @@
         {% endif %}
 
         <h2 style="color: white;margin-top: 50px;">Enter details</h2>
-        <div class="bg-warning" style="margin-bottom: 100px;margin-left: 20px;">
+        <div style="margin-bottom: 100px;margin-left: 20px;">
             <h3>Find donors:</h3>
             <form action="" method="post" id="find" data-cities-url="{% url 'finddonor:ajax_load_cities' %}">
                 {% csrf_token %}
-                {% for field in form %}
-                    {{ field.errors }}
-                    <label>{{ field.label_tag }}</label>
-                    {{ field }}
-                {% endfor %}
+{#                {% for field in form %}#}
+{#                    {{ field.errors }}#}
+{#                    <label>{{ field.label_tag }}</label>#}
+{#                    {{ field }}#}
+{#                {% endfor %}#}
+                {{ form|crispy }}
+
                 <br>
                 <button type="submit" class="btn btn-success"> Search..</button>
 {#                    <button>#}

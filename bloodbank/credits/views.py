@@ -15,31 +15,37 @@ def insert(request):
 		user = request.user
 		creditsnow = request.POST['credits']
 		organisation = request.POST['organisation']
-		email = request.POST['email']
+		email = user.email
 		wt = Wallet.objects.get(user = user)
 		ic = wt.credit
 		gc = -1 * int(creditsnow)
 		if int(creditsnow) <= wt.credit:
 			wt.credit -= int(creditsnow)
 			ac = wt.credit
-			print(ac)
 			wt.save()
 			p = Transaction(wallet = wt , initialcredit =ic , aftercredit = ac , getcredit= gc, organisation=organisation)
 			p.save()
-			send_mail(
-			'Blood Bank',
-			'Name          :' + str(user) + '\n' +
-			'Id            :' + str(p.transactionid) + '\n' +
-			'Organisation  :' + str(organisation) + '\n' +
-			'Credits 	   :' + str(creditsnow) + '\n',
-			'29riyajain@gmail.com',
-			[email],
-			fail_silently = False,
-			)
-			return render(request,'credits/success.html')
+			try:
+				send_mail(
+				'Blood Bank',
+				'Name          :' + str(user) + '\n' +
+				'Id            :' + str(p.transactionid) + '\n' +
+				'Organisation  :' + str(organisation) + '\n' +
+				'Credits 	   :' + str(creditsnow) + '\n',
+				'29riyajain@gmail.com',
+				[email],
+				fail_silently = False,
+				)
+				return render(request,'credits/success.html')
+			except:
+				wt.credit += int(creditsnow)
+				wt.save()
+				gc = -1 * gc
+				p = Transaction(wallet = wt , initialcredit =ac , aftercredit = ic , getcredit= gc, organisation= "Transaction Failed")
+				p.save()
+				return render(request,'credits/fail1.html')
 		else:
 			return render(request,'credits/fail.html')
-
 
 @login_required
 def index(request):

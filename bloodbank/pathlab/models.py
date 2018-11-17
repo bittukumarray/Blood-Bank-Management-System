@@ -25,5 +25,5 @@ class PathLabs(models.Model):
 class PathLabUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pathlab = models.ForeignKey(PathLabs, on_delete=models.CASCADE)
-    note = models.CharField(blank=False, max_length=1000)
+    testtype = models.CharField(blank=False, max_length=1000)
     feedback = models.CharField(blank=True, max_length=1000)

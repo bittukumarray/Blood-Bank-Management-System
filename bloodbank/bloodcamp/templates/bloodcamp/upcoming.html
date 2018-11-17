@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+
     <meta charset="utf-8">
     <title>Upcoming</title>
-  </head>
-  <style>
+ <style>
       .camps {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -29,8 +29,9 @@
 }
 
   </style>
-  <body>
-    <h1>U have come to upcoming page</h1>
+{% endblock %}
+  {% block body %}
+    <h1>Upcoming camps</h1>
     {% if camps %}
     <table class="camps">
       <tr>
@@ -48,33 +49,10 @@
         <td>{{ camp.location }}</td>
         <td><a href="{% url 'bloodcamp:newdonorpage' %}">Pre-register</a></td>
         </tr>
-        <!--{% if donors %}-->
-          <!--{% for donor in donors %}-->
-             <!--{% if donor.bloodcamp.campid == camp.campid %}-->
-                 <!--<table>-->
-                    <!--<tr>-->
-                    <!--<th>firstname</th>-->
-                    <!--<th>lastname</th>-->
-                    <!--<th>Email</th>-->
-                    <!--<th>phone</th>-->
-                    <!--<th>Gender</th>-->
-                    <!--<th>date</th>-->
-                    <!--<th>blood</th>-->
-                    <!--</tr>-->
-                    <!--<td>{{donor.firstname}}</td>-->
-                    <!--<td>{{donor.lastname}}</td>-->
-                    <!--<td>{{donor.email}}</td>-->
-                    <!--<td>{{donor.phone}}</td>-->
-                    <!--<td>{{donor.gender}}</td>-->
-                    <!--<td>{{donor.date}}</td>-->
-                    <!--<td>{{donor.blood}}</td>-->
-                 <!--</table>-->
-             <!--{% endif %}-->
-          <!--{% endfor %}-->
-      <!--{% endif %}-->
       {% endfor %}
      </table>
+    {% else %}
+        <p>No Upcoming Camps</p>
     {% endif %}
     <h2><a href="{% url 'bloodcamp:camphome' %}" style="text-decoration:none">Back</a></h2>
-  </body>
-</html>
+{% endblock %}

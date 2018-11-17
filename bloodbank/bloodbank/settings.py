@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'credits',
     'display',
     'finddonor.apps.FinddonorConfig',
+    'stock.apps.StockConfig',
     'requestblood.apps.RequestbloodConfig',
     'donate.apps.DonateConfig',
     'bloodcamp.apps.BloodcampConfig',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = '29riyajain@gmail.com'
 EMAIL_HOST_PASSWORD = emailpassword
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

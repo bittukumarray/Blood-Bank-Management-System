@@ -8,6 +8,7 @@ from django.urls import reverse
 from bloodcamp.forms import newdonor, newcamp
 from . import forms
 from .models import *
+from .bloodcamps_functions import default_fun
 
 
 # Create your views here.
@@ -28,6 +29,7 @@ def VolunteerList(request):
     return render(request, 'bloodcamp/volunteer_list.html', {'volunteer': obj})
 
 
+
 def index(request):
     return render(request, 'bloodcamp/index.html')
 
@@ -36,33 +38,6 @@ def camphome(request):
     return render(request, 'bloodcamp/camphome.html')
 
 
-def checkdate(o):
-    if (date.today() > o.enddate):
-        print('check 1')
-        return '1'
-    elif (date.today() < o.startdate):
-        print('check 3')
-        return '3'
-    else:
-        print('check 2')
-        return '2'
-
-
-def default_fun(request):
-    camps = BloodCamp.objects.all()
-    for camp in camps:
-        if checkdate(camp) == '1':
-            print('is 1')
-            camp.status = '1'
-            camp.save()
-        elif checkdate(camp) == '2':
-            print('is 2')
-            camp.status = '2'
-            camp.save()
-        elif checkdate(camp) == '3':
-            print('is 3')
-            camp.status = '3'
-            camp.save()
 
 
 def history(request):
@@ -75,7 +50,7 @@ def history(request):
         print(camp.campid)
         if donors:
             for donor in donors:
-                if donor.BloodCamp.campid == camp.campid:
+                if donor.bloodcamp.campid == camp.campid:
                     print(donor.firstname)
 
     # print('camps:',camps)
@@ -156,6 +131,8 @@ def newdonorpage(request):
             blood = form1.cleaned_data['blood']
             email = str(form1.cleaned_data['email'])
             bloodcamp = form1.cleaned_data['bloodcamp']
+            startdate = bloodcamp.startdate
+            enddate = bloodcamp.enddate
             #message = 'Dear ' + firstname + ", You have registered for the blood donation camp at "+ bloodcamp + ""
             send_mail(
                 'Blood Bank',
@@ -163,7 +140,10 @@ def newdonorpage(request):
                 'Lastname:' + str(lastname) + '\n' +
                 'Phone:' + str(phone) + '\n' +
                 'Blood:' + str(blood) + '\n' +
-                'bloodcamp:' + str(bloodcamp) + '\n',
+                'startdate:' + str(startdate) + '\n' +
+                'enddate:' + str(enddate) + '\n' +
+                'Visit on these days to donate blood' + '\n' +
+                'bloodcamp:' + str(bloodcamp) + '\n' ,
                 '29riyajain@gmail.com',
                 [email],
                 fail_silently=False,

@@ -1,17 +1,70 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>New donor</title>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Donor Details</h1>
-      <form method="POST">
-        {{ form1.as_p}}
-        {% csrf_token %}
-        <input type="submit" class="btn btn-primary" value="Submit">
-      </form>
-    </div>
-  </body>
-</html>
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>New Donor</title>
+  <style media="screen">
+    .table{
+      width:100%;
+    }
+    .registerbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        opacity: 0.9;
+    }
+
+    .registerbtn:hover {
+        opacity: 1;
+    }
+
+  </style>
+
+{% endblock %}
+
+{% block body %}
+<h1>Donor Details:</h1>
+<form class="form" action="" method="post">
+  <table class="table">
+    <tr>
+      <td>FirstName:</td>
+      <td>{{form1.firstname}}</td>
+    </tr>
+    <tr>
+      <td>LastName:</td>
+      <td>{{form1.lastname}}</td>
+    </tr>
+    <tr>
+      <td>Email:</td>
+      <td>{{form1.email}}</td>
+    </tr>
+    <tr>
+      <td>Phone:</td>
+      <td>{{form1.phone}}</td>
+    </tr>
+    <tr>
+      <td>Gender:</td>
+      <td>{{form1.gender}}</td>
+    </tr>
+    <tr>
+      <td>Blood:</td>
+      <td>{{form1.blood}}</td>
+    </tr>
+    <tr>
+      <td>Blood Camp:</td>
+      <td>{{form1.bloodcamp}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" class="registerbtn" value="Register"></td>
+    </tr>
+  </table>
+  {% csrf_token %}
+
+</form>
+
+
+{% endblock %}

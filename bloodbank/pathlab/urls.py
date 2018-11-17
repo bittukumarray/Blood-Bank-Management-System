@@ -4,5 +4,6 @@ from . import views
 app_name = "pathlab"
 
 urlpatterns = [
-    path('hello/', views.hello),
+    path('', views.index),
+    path('result', views.result, name = "result")
 ]

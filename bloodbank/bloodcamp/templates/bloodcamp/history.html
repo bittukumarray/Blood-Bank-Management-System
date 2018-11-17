@@ -1,9 +1,42 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>History</title>
     <style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    display: none;
+}
+
+
+
+
 .customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -35,6 +68,7 @@
 .camps td, .camps th {
     border: 1px solid #ddd;
     padding: 8px;
+    width:20%;
 }
 
 .camps tr:nth-child(even){background-color: #f2f2f2;}
@@ -49,10 +83,14 @@
     color: white;
 }
 
+
+
+
     </style>
-  </head>
-  <body>
-    <h1>History Page</h1>
+  {% endblock %}
+
+{% block body %}
+    <h1>History</h1>
     {% if camps %}
 
 
@@ -62,43 +100,79 @@
         <th>StartDate</th>
         <th>EndDate</th>
         <th>location</th>
+        <th>Donators</th>
       </tr>
+     </table>
+
         {% for camp in camps %}
+    <table class="camps">
         <tr>
         <td>{{ camp.campid }}</td>
         <td>{{ camp.startdate }}</td>
         <td>{{ camp.enddate }}</td>
         <td>{{ camp.location }}</td>
+          <td><button id="btn" name="{{ camp.campid }}" onclick="showdetails(this.name)">show details</button></td>
         </tr>
+    </table>
         <!--{% if donors %}-->
-            <!--<table class="customers">-->
-                    <!--<tr>-->
-                    <!--<th>firstname</th>-->
-                    <!--<th>lastname</th>-->
-                    <!--<th>Email</th>-->
-                    <!--<th>phone</th>-->
-                    <!--<th>Gender</th>-->
-                    <!--<th>date</th>-->
-                    <!--<th>blood</th>-->
-                    <!--</tr>-->
-                    <!--{% for donor in donors %}-->
-                    <!--{% if donor.bloodcamp.campid == camp.campid %}-->
-                    <!--<tr>-->
-                    <!--<td>{{donor.firstname}}</td>-->
-                    <!--<td>{{donor.lastname}}</td>-->
-                    <!--<td>{{donor.email}}</td>-->
-                    <!--<td>{{donor.phone}}</td>-->
-                    <!--<td>{{donor.gender}}</td>-->
-                    <!--<td>{{donor.date}}</td>-->
-                    <!--<td>{{donor.blood}}</td>-->
-                    <!--</tr>-->
-                    <!--{% endif %}-->
-                    <!--{% endfor %}-->
-            <!--</table>-->
-      <!--{% endif %}-->
+     <div id="{{ camp.campid }}"  class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+            <table class="customers">
+                    <tr>
+                    <th>firstname</th>
+                    <th>lastname</th>
+                    <th>Email</th>
+                    <th>phone</th>
+                    <th>Gender</th>
+                    <th>date</th>
+                    <th>blood</th>
+                    </tr>
+                    {% for donor in donors %}
+                    {% if donor.bloodcamp.campid == camp.campid %}
+                    <tr>
+                    <td>{{donor.firstname}}</td>
+                    <td>{{donor.lastname}}</td>
+                    <td>{{donor.email}}</td>
+                    <td>{{donor.phone}}</td>
+                    <td>{{donor.gender}}</td>
+                    <td>{{donor.date}}</td>
+                    <td>{{donor.blood}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+            </table>
+  </div>
+</div>
+
+      {% endif %}
       {% endfor %}
      </table>
+     {% else %}
+        <p>No History Camps</p>
     {% endif %}
     <h2><a href="{% url 'bloodcamp:camphome' %}" style="text-decoration:none">Back</a></h2>
-  </body>
-</html>
+ <script>
+// Get the modal
+
+
+// Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+var modal;
+// When the user clicks the button, open the modal
+function showdetails(name) {
+  modal = document.getElementById(name);
+    modal.style.display = "block";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+  {% endblock %}

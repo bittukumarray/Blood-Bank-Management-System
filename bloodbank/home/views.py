@@ -1,4 +1,22 @@
-from django.shortcuts import render, redirect
+# from django.shortcuts import render, redirect
+# from .models import *
+# from . import forms
+# from django.contrib.auth.models import User
+# from django.urls import reverse
+# from django.http import HttpResponse, HttpResponseRedirect
+# from django.contrib.auth import authenticate,login,logout
+# from django.contrib.auth.decorators import login_required
+# #from django.views.decorators.csrf import csrf_protect
+# #from django.views.decorators.cache import never_cache
+# #from django.views.decorators.debug import sensitive_post_parameters
+# from django.shortcuts import render, Http404
+# from django.contrib.auth import update_session_auth_hash
+# from credits.models import Wallet, Transaction
+# from django.contrib.auth.views import PasswordResetView
+
+#-------------------------My import statements end here----------------
+
+from django.shortcuts import render
 from .models import *
 from . import forms
 from django.contrib.auth.models import User
@@ -6,13 +24,47 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.template.response import TemplateResponse
 #from django.views.decorators.csrf import csrf_protect
 #from django.views.decorators.cache import never_cache
 #from django.views.decorators.debug import sensitive_post_parameters
-from django.shortcuts import render, Http404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import update_session_auth_hash
-from credits.models import Wallet, Transaction
 from django.contrib.auth.views import PasswordResetView
+from credits.models import Wallet
+from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import render, redirect
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import send_mail, EmailMessage
+from urllib.parse import urlparse, urlunparse
+
+from django.conf import settings
+# Avoid shadowing the login() and logout() views below.
+from django.contrib.auth import (
+    REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
+    logout as auth_logout, update_session_auth_hash,
+)
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect, QueryDict
+from django.shortcuts import resolve_url
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import FormView
 
 #def my_password_reset(request,template_name="home/volunteerform.html"):
 #    return PasswordResetView(request,template_name)
@@ -22,6 +74,37 @@ from django.contrib.auth.views import PasswordResetView
 
 def index(request):
     return render(request,'home/index.html')
+
+# def SignUp(request):
+#
+#     userform=forms.UserForm()
+#     useraddressform=forms.UserAddressForm()
+#     if request.user.is_authenticated:
+#         return HttpResponseRedirect(reverse("home:profile"))
+#
+#     if request.method=="POST":
+#         userform=forms.UserForm(data = request.POST)
+#         useraddressform=forms.UserAddressForm(data = request.POST)
+#         birth = request.POST['birth']
+#
+#         if userform.is_valid() and useraddressform.is_valid():
+#             user=userform.save(commit=False)
+#             useraddress=useraddressform.save(commit=False)
+#             user.set_password(user.password)
+#             user.save()
+#             useraddress.user=user
+#             useraddress.birth=birth
+#             useraddress.save()
+#
+#
+#             UserProfile.objects.create(user = user)
+#             Wallet.objects.create(user = user)
+#             UserHistory.objects.create(user = user)
+#
+#
+#             return HttpResponseRedirect(reverse("home:login"))
+#
+#     return render(request,'home/signup.html',{'form':userform,'address':useraddressform})
 
 def SignUp(request):
 
@@ -39,6 +122,7 @@ def SignUp(request):
             user=userform.save(commit=False)
             useraddress=useraddressform.save(commit=False)
             user.set_password(user.password)
+            user.is_active = False
             user.save()
             useraddress.user=user
             useraddress.birth=birth
@@ -48,11 +132,51 @@ def SignUp(request):
             UserProfile.objects.create(user = user)
             Wallet.objects.create(user = user)
             UserHistory.objects.create(user = user)
+            current_site = get_current_site(request)
+            subject = 'Activate Your BloodBank Account'
+            message = render_to_string('home/account_activation_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': account_activation_token.make_token(user),
+            })
+            #user.email_user(subject, message)
+            to_email = userform.cleaned_data.get('email')
+            email = EmailMessage(
+                subject, message, to=[to_email]
+            )
+            email.send()
+
+            return HttpResponseRedirect(reverse('home:account_activation_sent'))
 
 
-            return HttpResponseRedirect(reverse("home:login"))
+            #return HttpResponseRedirect(reverse("home:index"))
 
     return render(request,'home/signup.html',{'form':userform,'address':useraddressform})
+
+
+def account_activation_sent(request):
+    return render(request, 'home/account_activation_sent.html')
+
+
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        #user.profile.email_confirmed = True
+        user.save()
+        login(request, user)
+        return HttpResponseRedirect(reverse('home:login'))
+    else:
+        return render(request, 'home/account_activation_invalid.html')
+
 
 
 @login_required
@@ -143,7 +267,7 @@ def Update_Details(request):
         addressform = forms.UploadAddress(data = request.POST,instance = request.user.useraddress)
         userform = forms.UpdateUser(data = request.POST, instance = request.user)
 
-        if userform.is_valid() and addressform:
+        if userform.is_valid() and addressform.is_valid():
 
             userform.save()
             addressform.save()
