@@ -1,7 +1,19 @@
 {% extends 'home/base.html' %}
 {% block head %}
+    {% load staticfiles %}
     <title>Blood Source | Home</title>
+    <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/styles/responsive.css' %}">
     <style>
+        .carousel-inner img {
+            width: 100%;
+            height: 500px;
+        }
+
         .btn-circle {
             width: 200px;
             height: 200px;
@@ -38,11 +50,106 @@
     <div class="container-fluid" id="n2">
         <p class="text-center" id="head">BloodSource</p>
     </div>
-    <a href="{% url 'finddonor:index' %}">
-        <button type="button" class="btn btn-default btn-circle btn-lg" style="margin: 100px;opacity: 0.6;">Find donor</button>
+
+
+
+    <div id="demo" class="carousel slide" data-ride="carousel"
+         style="margin-left: 180px;margin-right: 180px;margin-top: 100px">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active"></li>
+            <li data-target="#demo" data-slide-to="1"></li>
+            <li data-target="#demo" data-slide-to="2"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg6BrQaNfHMmLqHRZWyVfyYevSq7wUwbFax1pTREMI_Z4v8Shx"
+                     alt="Los Angeles" width="1100" height="500">
+            </div>
+            <div class="carousel-item">
+                <img src="https://socialerasmus.esn.org/sites/default/files/1200-5480-blood-donation-photo1.jpg"
+                     alt="Chicago" width="1100" height="500">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i0.wp.com/coolnchic.com/wp-content/uploads/2016/12/blooddrive-1.png?fit=617%2C388"
+                     alt="New York" width="1100" height="500">
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+
+    <div class="about" style="margin: 100px">
+        <div class="container">
+            <div class="row row-lg-eq-height">
+
+                <!-- About Content -->
+                <div class="col-lg-7">
+                    <div class="about_content">
+                        <div class="section_title"><h2>A great medical team to help your needs</h2></div>
+                        <div class="about_text">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ante leo, finibus quis
+                                est ut, tempor
+                                tincidunt ipsum. Nam consequat semper sollicitudin. Aliquam nec dapibus massa. Pellen
+                                tesque in luctus ex.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- About Image -->
+                <div class="col-lg-5">
+                    <div class="about_image">
+                        <a href="{% url 'finddonor:index' %}">
+                            <button type="button" class="btn btn-default btn-circle btn-lg"
+                                    style="margin: 100px;opacity: 0.6;">Find donor
+                            </button>
+                        </a></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="cta" style="background:#314c77;opacity: 0.6">
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/cta_1.jpg" data-speed="0.8"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="cta_container d-flex flex-xl-row flex-column align-items-xl-start align-items-center justify-content-xl-start justify-content-center">
+						<div class="cta_content text-xl-left text-center">
+							<div class="cta_title">Donate now and save a life !</div>
+							<div class="cta_subtitle">Morbi arcu neque, scelerisque eget ligula ac, congue tempor felis. Integer tempor, eros a egestas.</div>
+						</div>
+{#						<div class="button cta_button ml-xl-auto"><a href="{% url 'donate:index' %}"><span>Book an appointment</span><span>call now</span></a></div>#}
+					    <button class="btn" style="background-color: #61d106"><a href="{% url 'donate:index' %}">Book an appointment</a></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <a href="{% url 'donate:index' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Donate now
+        </button>
     </a>
-    <a href="{% url 'requestblood:index' %}">
-        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Request blood
+    <a href="{% url 'availability:index' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">Check blood
+            availability
+        </button>
+    </a>
+    <a href="{% url 'bloodcamp:camphome' %}">
+        <button type="button" class="btn btn-default btn-circle btn-lg text-black" style="opacity: 0.6;">BloodCamps
         </button>
     </a>
 

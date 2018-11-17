@@ -1,0 +1,58 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
+
+    <meta charset="utf-8">
+    <title>Upcoming</title>
+ <style>
+      .camps {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.camps td, .camps th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.camps tr:nth-child(even){background-color: #f2f2f2;}
+
+.camps tr:hover {background-color: #ddd;}
+
+.camps th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: 	#5B71FF;
+    color: white;
+}
+
+  </style>
+{% endblock %}
+  {% block body %}
+    <h1>Upcoming camps</h1>
+    {% if camps %}
+    <table class="camps">
+      <tr>
+        <th>CampID</th>
+        <th>StartDate</th>
+        <th>EndDate</th>
+        <th>location</th>
+        <th>Pre-register</th>
+      </tr>
+      {% for camp in camps %}
+        <tr>
+        <td>{{ camp.campid }}</td>
+        <td>{{ camp.startdate }}</td>
+        <td>{{ camp.enddate }}</td>
+        <td>{{ camp.location }}</td>
+        <td><a href="{% url 'bloodcamp:newdonorpage' %}">Pre-register</a></td>
+        </tr>
+      {% endfor %}
+     </table>
+    {% else %}
+        <p>No Upcoming Camps</p>
+    {% endif %}
+    <h2><a href="{% url 'bloodcamp:camphome' %}" style="text-decoration:none">Back</a></h2>
+{% endblock %}

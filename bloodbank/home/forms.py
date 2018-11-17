@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserAddress,UserProfile
+from .models import *
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
@@ -51,4 +51,6 @@ class UpdateUser(forms.ModelForm):
 class UploadAddress(forms.ModelForm):
     class Meta:
         model = UserAddress
-        exclude = ['user','birth','blood','gender']
+        exclude = ['user','blood','gender']
+
+
