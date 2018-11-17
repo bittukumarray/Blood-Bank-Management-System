@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-
+from django.urls import reverse_lazy
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -29,9 +29,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'credits',
+    'display',
     'finddonor.apps.FinddonorConfig',
     'requestblood.apps.RequestbloodConfig',
+    'donate.apps.DonateConfig',
+    'bloodcamp.apps.BloodcampConfig',
     'pathlab.apps.PathlabConfig',
+    'availability.apps.AvailabilityConfig',
     'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,7 +57,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'bloodbank.urls'
-
+emailpassword = "riyajain04"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -133,6 +138,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOGIN_URL = reverse_lazy('home:login')
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -148,4 +154,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = '29riyajain@gmail.com'
-EMAIL_HOST_PASSWORD = 'riyajain04'
+EMAIL_HOST_PASSWORD = emailpassword

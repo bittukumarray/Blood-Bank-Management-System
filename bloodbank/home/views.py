@@ -1,11 +1,21 @@
-from django.shortcuts import render
-from .models import UserAddress, UserProfile, Wallet, UserHistory
+from django.shortcuts import render, redirect
+from .models import *
 from . import forms
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+#from django.views.decorators.csrf import csrf_protect
+#from django.views.decorators.cache import never_cache
+#from django.views.decorators.debug import sensitive_post_parameters
+from django.shortcuts import render, Http404
+from django.contrib.auth import update_session_auth_hash
+from credits.models import Wallet, Transaction
+from django.contrib.auth.views import PasswordResetView
+
+#def my_password_reset(request,template_name="home/volunteerform.html"):
+#    return PasswordResetView(request,template_name)
 
 
 # Create your views here.
@@ -17,6 +27,8 @@ def SignUp(request):
 
     userform=forms.UserForm()
     useraddressform=forms.UserAddressForm()
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("home:profile"))
 
     if request.method=="POST":
         userform=forms.UserForm(data = request.POST)
@@ -32,12 +44,13 @@ def SignUp(request):
             useraddress.birth=birth
             useraddress.save()
 
+
             UserProfile.objects.create(user = user)
             Wallet.objects.create(user = user)
             UserHistory.objects.create(user = user)
 
 
-            return HttpResponseRedirect(reverse("home:index"))
+            return HttpResponseRedirect(reverse("home:login"))
 
     return render(request,'home/signup.html',{'form':userform,'address':useraddressform})
 
@@ -50,19 +63,33 @@ def user_logout(request):
 
 
 def LogIn(request):
-    if request.method=="POST":
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("home:profile"))
+
+    elif request.method=="POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(username=username, password=password)
+
+        # if user:
+        #     if user.is_active:
+        #         login(request,user)
+        #
+        #
+        #
+        #         return HttpResponseRedirect(reverse("home:index"))
 
         if user:
             if user.is_active:
-                login(request,user)
-
-
+                login(request, user)
+                if 'next' in request.POST:
+                    try:
+                         return redirect(request.POST.get('next'))
+                    except:
+                        print('Next not found')
 
                 return HttpResponseRedirect(reverse("home:index"))
+
 
         else:
             return HttpResponseRedirect(reverse("home:login"))
@@ -85,7 +112,11 @@ def profile(request):
 
 @login_required
 def Image_Upload(request):
-    userprofile = request.user.userprofile
+    try:
+        userprofile = request.user.userprofile
+    except:
+        return HttpResponseRedirect(reverse('home:profile'))
+
     imageform = forms.Upload_Image(instance = userprofile)
 
     if request.method == "POST":
@@ -103,7 +134,10 @@ def Image_Upload(request):
 @login_required
 def Update_Details(request):
     userform = forms.UpdateUser(instance = request.user)
-    addressform = forms.UploadAddress(instance = request.user.useraddress)
+    try:
+        addressform = forms.UploadAddress(instance = request.user.useraddress)
+    except:
+        return HttpResponseRedirect(reverse('home:profile'))
 
     if request.method == "POST":
         addressform = forms.UploadAddress(data = request.POST,instance = request.user.useraddress)
@@ -116,3 +150,40 @@ def Update_Details(request):
 
             return HttpResponseRedirect(reverse('home:profile'))
     return render(request,'home/update_details.html',{'userform':userform,'addressform':addressform})
+
+@login_required
+def Update_Password(request):
+    if request.method == "POST":
+        #passwordform = forms.PasswordForm(data = request.POST, instance=request.user)
+        #return HttpResponseRedirect(reverse('home:update_password'))
+        password = request.POST.get('password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        user = authenticate(username=request.user.username,password=password)
+        form=request.user
+
+        if user:
+            print(user)
+            if new_password == confirm_password:
+                print(new_password==confirm_password)
+                curuser=request.user
+                #curuser.password=new_password
+                curuser.set_password(new_password)
+                curuser.save()
+                update_session_auth_hash(request, form)
+                return HttpResponseRedirect(reverse('home:profile'))
+    return render(request,'home/password.html',)
+
+
+
+
+
+
+
+#def password_change(request):
+#    if request.method == 'POST':
+#        form = PasswordChangeForm(user=request.user, data=request.POST)
+#        if form.is_valid():
+#            form.save()
+#            update_session_auth_hash(request, form.user)

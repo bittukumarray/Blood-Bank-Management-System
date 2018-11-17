@@ -4,11 +4,9 @@ body {
     min-height: 100%;
     margin: 0;
     padding: 0;
-    background: url("images/bloodbg.jpg");
+    /*background: url("images/bloodbg.jpg");*/
     background-size: 100% 90%;
-    background-repeat: no-repeat;
-    #background-color: pink;
-    /*background-attachment: fixed;*/
+
 }
 
 

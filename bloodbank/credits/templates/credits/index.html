@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+  <style>
+  body {
+ background-color:;
+	}
+  h1 {color:;}
+  h2 {color:;}
+  button {
+    background-color:;
+    border: none;
+    color: ;
+    padding: 13px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+	}
+
+  .submit {
+    background-color: ;
+    border: none;
+    color: ;
+    padding: 13px 26px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+	}
+  .b{color:;}
+
+  </style>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <script type="text/javascript">
+  (function()
+	{
+	  if( window.localStorage )
+	  {
+	    if( !localStorage.getItem('firstLoad') )
+	    {
+	      localStorage['firstLoad'] = true;
+	      window.location.reload();
+	    }
+	    else
+      localStorage.removeItem('firstLoad');
+	  }
+	})();
+  </script>
+  <body>
+    {% if user.is_authenticated %}
+    <h1> Wallet </h1>
+	<h2>N.o of Credits : {{ coins.credit }}</h2>
+    <a href="{% url 'credits:history' %}" style="text-decoration: none;"><button>History of Transactions</button></a>
+	<br><br><br><br>
+	<h1> Using Credits </h1>
+    <form method="post" action="/credits/insert/" autocomplete="off">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td><div class = 'b'> Credits to be Used </div><td>
+          <td><input type="number" min ="1" name="credits"  required></td>
+        </tr>
+        <tr>
+          <td><div class = 'b'> Organisation </div><td>
+          <td> {{org.organisation}} </td>
+        </tr>
+        <tr>
+          <td><div class = 'b'> Email </div><td>
+          <td><input type="email" name="email" required></td>
+        </tr>
+      </table>
+      <br>
+      <input class="submit" type="submit" value="Submit">
+    </form>
+    {% endif %}
+  </body>
+</html>

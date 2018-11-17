@@ -1,0 +1,17 @@
+{% extends 'home/base.html' %}
+{% block head %}
+    <title>BloodSource | Donate</title>
+{% endblock %}
+{% block body %}
+    <h2 style="margin: 100px">Please fill the following details to book your appointment</h2>
+    <form method="post" action=""  style="margin: 100px">
+        {% csrf_token %}
+        {% for field in form %}
+            <b style="color:red;">{{ field.errors }}</b>
+            <label>{{ field.label_tag }}</label>
+            {{ field }}
+        {% endfor %}
+        <button class="btn btn-success" type="submit">Submit</button>
+    </form>
+
+{% endblock %}
