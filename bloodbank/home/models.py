@@ -93,9 +93,9 @@ class UserAddress(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     city = models.ForeignKey(City, on_delete=models.CASCADE, max_length=200)
-    locality = models.CharField(blank=True, max_length=400)
-    house = models.CharField(blank=True, max_length=200)
-    landmark = models.CharField(blank=True, max_length=200)
+    locality = models.CharField(max_length=400)
+    house = models.CharField(max_length=200)
+    landmark = models.CharField(max_length=200)
     phone = models.CharField(max_length=10,
                              validators=[
                                  RegexValidator(

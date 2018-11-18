@@ -39,9 +39,9 @@
     <a href="{% url 'home:image_upload' %}"><img width="300px" height="300px" src="{{user.userprofile.image.url}}"></a>
     {% else %}
         {% if user.useraddress.gender == "Female" %}
-        <a href="{% url 'home:image_upload' %}"><img src="{% static 'home/images/girlavatar.png' %}" alt="Avatar" class="avatar"></a>
+        <a href="{% url 'home:image_upload' %}" style="color: black"><img src="{% static 'home/images/girlavatar.png' %}" alt="Avatar" class="avatar"></a>
         {% else %}
-        <a href="{% url 'home:image_upload' %}"><img src="{% static 'home/images/boyavatar.png' %}" alt="Avatar" class="avatar"></a>
+        <a href="{% url 'home:image_upload' %}" style="color: black"><img src="{% static 'home/images/boyavatar.png' %}" alt="Avatar" class="avatar"></a>
         {% endif %}
     {% endif %}
 
@@ -57,7 +57,7 @@
   </tr>
   <tr>
     <td></td>
-    <td><a href="{% url 'home:image_upload' %}">Update Status</a></td>
+    <td><i><a href="{% url 'home:image_upload' %}" style="color: black">Update Status</a></i></td>
   </tr>
   <tr>
     <td></td>
@@ -120,7 +120,7 @@
       <td>
       </td>
       <br>
-    <td><a href="{% url 'home:update_details' %}">Update Details</a></td>
+    <td><a href="{% url 'home:update_details' %}" style="color: black">Update Details</a></td>
     </tr>
     <br><br>
     <tr>
@@ -135,11 +135,15 @@
       <td>Current Credits:</td>
       <td>{{user.wallet.credit}}</td>
       </tr>
+     <tr>
+      <td></td>
+      <td><a href="{% url 'credits:index' %}" style="color: black">Wallet</a></td>
+      </tr>
       <tr>
         <td>
         </td>
         <br>
-      <td><a href="{% url 'home:update_password' %}">Update Password</a></td>
+      <td><a href="{% url 'home:update_password' %}" style="color: black">Update Password</a></td>
       </tr>
 
   </table>
