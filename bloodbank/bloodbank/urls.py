@@ -29,6 +29,7 @@ urlpatterns = [
                   path('requestblood/', include('requestblood.urls')),
                   path('availability/', include('availability.urls')),
                   path('bloodcamp/', include('bloodcamp.urls')),
+                  path('hospitals/', include('Hospitals.urls')),
                   path('donate/', include('donate.urls')),
                   re_path(r'^', include('django.contrib.auth.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
