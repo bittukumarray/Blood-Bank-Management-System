@@ -59,6 +59,7 @@ from django.shortcuts import resolve_url
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url, urlsafe_base64_decode
+from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
@@ -75,36 +76,6 @@ from django.views.generic.edit import FormView
 def index(request):
     return render(request,'home/index.html')
 
-# def SignUp(request):
-#
-#     userform=forms.UserForm()
-#     useraddressform=forms.UserAddressForm()
-#     if request.user.is_authenticated:
-#         return HttpResponseRedirect(reverse("home:profile"))
-#
-#     if request.method=="POST":
-#         userform=forms.UserForm(data = request.POST)
-#         useraddressform=forms.UserAddressForm(data = request.POST)
-#         birth = request.POST['birth']
-#
-#         if userform.is_valid() and useraddressform.is_valid():
-#             user=userform.save(commit=False)
-#             useraddress=useraddressform.save(commit=False)
-#             user.set_password(user.password)
-#             user.save()
-#             useraddress.user=user
-#             useraddress.birth=birth
-#             useraddress.save()
-#
-#
-#             UserProfile.objects.create(user = user)
-#             Wallet.objects.create(user = user)
-#             UserHistory.objects.create(user = user)
-#
-#
-#             return HttpResponseRedirect(reverse("home:login"))
-#
-#     return render(request,'home/signup.html',{'form':userform,'address':useraddressform})
 
 def SignUp(request):
 
@@ -120,39 +91,47 @@ def SignUp(request):
 
         if userform.is_valid() and useraddressform.is_valid():
             user=userform.save(commit=False)
-            useraddress=useraddressform.save(commit=False)
-            user.set_password(user.password)
-            user.is_active = False
-            user.save()
-            useraddress.user=user
-            useraddress.birth=birth
-            useraddress.save()
+            try:
+                obj = User.objects.get(email=user.email)
+                #print("pahle",obj)
+            except:
+                obj=False
+            if not obj:
+                useraddress=useraddressform.save(commit=False)
+                user.set_password(user.password)
+                user.is_active = False
+                user.save()
+                useraddress.user=user
+                useraddress.birth=birth
+                useraddress.save()
 
 
-            UserProfile.objects.create(user = user)
-            Wallet.objects.create(user = user)
-            UserHistory.objects.create(user = user)
-            current_site = get_current_site(request)
-            subject = 'Activate Your BloodBank Account'
-            message = render_to_string('home/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
-                'token': account_activation_token.make_token(user),
-            })
-            #user.email_user(subject, message)
-            to_email = userform.cleaned_data.get('email')
-            email = EmailMessage(
-                subject, message, to=[to_email]
-            )
-            email.send()
+                UserProfile.objects.create(user = user)
+                Wallet.objects.create(user = user)
+                UserHistory.objects.create(user = user)
+                current_site = get_current_site(request)
+                subject = 'Activate Your BloodBank Account'
+                message = render_to_string('home/account_activation_email.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                    'token': account_activation_token.make_token(user),
+                })
+                #user.email_user(subject, message)
+                to_email = userform.cleaned_data.get('email')
+                email = EmailMessage(
+                    subject, message, to=[to_email]
+                )
+                email.send()
 
-            return HttpResponseRedirect(reverse('home:account_activation_sent'))
-
-
-            #return HttpResponseRedirect(reverse("home:index"))
+                return HttpResponseRedirect(reverse('home:account_activation_sent'))
+            messages.error(request, 'This Email already exists')
+            #raise Http404("Email already exists")
+        else:
+            messages.error(request, 'This username already exists')
 
     return render(request,'home/signup.html',{'form':userform,'address':useraddressform})
+
 
 
 def account_activation_sent(request):
@@ -170,7 +149,6 @@ def activate(request, uidb64, token):
 
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
-        #user.profile.email_confirmed = True
         user.save()
         login(request, user)
         return HttpResponseRedirect(reverse('home:login'))
