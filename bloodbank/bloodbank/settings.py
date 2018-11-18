@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'credits',
     'display',
+    'Hospitals.apps.HospitalsConfig',
     'finddonor.apps.FinddonorConfig',
     'stock.apps.StockConfig',
     'requestblood.apps.RequestbloodConfig',

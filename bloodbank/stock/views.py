@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import BloodAvailability, UserAddress
+from .models import BloodAvailability
+from home.models import UserAddress
 from django.core.mail import send_mail
 
 
@@ -33,8 +34,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that A- blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -49,8 +50,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that A+ blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -66,8 +67,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that B- blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -83,8 +84,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that B+ blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -100,8 +101,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that O- blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -117,8 +118,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that O+ blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -134,8 +135,8 @@ def sendingmail(request):
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that AB- blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )
@@ -144,15 +145,15 @@ def sendingmail(request):
 
             Donor_data = UserAddress.objects.all()
             print(Donor_data)
-            ab_plus = 'O-'
+            ab_plus = 'AB+'
             Donor_data_selected = UserAddress.objects.filter(blood=ab_plus)
             print(Donor_data_selected)
             for user in Donor_data_selected:
                 # Email_List.append(user.user.email)
                 print(user.user.email)
                 send_mail(
-                    'Subject',
-                    'Content',
+                    'Notification regarding blood donation ',
+                    'It is to be notified that AB+ blood qty is less in our blood bank we need your help',
                     'vedavyas22541@gmail.com',
                     [user.user.email, ],
                 )

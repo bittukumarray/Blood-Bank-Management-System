@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+{% block title %}
+Partner Hospitals
+{% endblock %}
+
+
+
+{% block body %}
+<h2 style="color: white;margin-top: 50px;" xmlns:Hospitals="http://www.w3.org/1999/xhtml"
+    xmlns="http://www.w3.org/1999/html">Partner Hospitals near you</h2>
+<div class="bg-warning" style="margin-bottom: 100px;margin-left: 20px;">
+    <h3>Partner Hospitals</h3>
+    {% for hospital in hospitals %}
+    <dt>{{ hospital.Hospital_name }}</dt>
+    <dd>Address: {{ hospital.Hospital_address }}</dd>
+    {% endfor %}
+
+
+    <form action="{% url 'Hospitals:result' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Find on Map</button>
+    </form>
+
+</div>
+
+{% endblock %}

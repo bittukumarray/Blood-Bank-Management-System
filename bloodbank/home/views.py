@@ -1,77 +1,27 @@
-# from django.shortcuts import render, redirect
-# from .models import *
-# from . import forms
-# from django.contrib.auth.models import User
-# from django.urls import reverse
-# from django.http import HttpResponse, HttpResponseRedirect
-# from django.contrib.auth import authenticate,login,logout
-# from django.contrib.auth.decorators import login_required
-# #from django.views.decorators.csrf import csrf_protect
-# #from django.views.decorators.cache import never_cache
-# #from django.views.decorators.debug import sensitive_post_parameters
-# from django.shortcuts import render, Http404
-# from django.contrib.auth import update_session_auth_hash
-# from credits.models import Wallet, Transaction
-# from django.contrib.auth.views import PasswordResetView
-
-#-------------------------My import statements end here----------------
-
-from django.shortcuts import render
 from .models import *
 from . import forms
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate,login,logout
-from django.contrib.auth.decorators import login_required
-from django.template.response import TemplateResponse
-#from django.views.decorators.csrf import csrf_protect
-#from django.views.decorators.cache import never_cache
-#from django.views.decorators.debug import sensitive_post_parameters
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.views import PasswordResetView
 from credits.models import Wallet
-from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import send_mail, EmailMessage
-from urllib.parse import urlparse, urlunparse
 
-from django.conf import settings
-# Avoid shadowing the login() and logout() views below.
+
 from django.contrib.auth import (
-    REDIRECT_FIELD_NAME, get_user_model, login as auth_login,
-    logout as auth_logout, update_session_auth_hash,
+    update_session_auth_hash,
 )
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import (
-    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
-)
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect, QueryDict
-from django.shortcuts import resolve_url
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.contrib import messages
-from django.utils.translation import gettext_lazy as _
-from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
-
-#def my_password_reset(request,template_name="home/volunteerform.html"):
-#    return PasswordResetView(request,template_name)
 
 
-# Create your views here.
 
 def index(request):
     return render(request,'home/index.html')
@@ -173,14 +123,6 @@ def LogIn(request):
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
 
-        # if user:
-        #     if user.is_active:
-        #         login(request,user)
-        #
-        #
-        #
-        #         return HttpResponseRedirect(reverse("home:index"))
-
         if user:
             if user.is_active:
                 login(request, user)
@@ -256,8 +198,6 @@ def Update_Details(request):
 @login_required
 def Update_Password(request):
     if request.method == "POST":
-        #passwordform = forms.PasswordForm(data = request.POST, instance=request.user)
-        #return HttpResponseRedirect(reverse('home:update_password'))
         password = request.POST.get('password')
         new_password = request.POST.get('new_password')
         confirm_password = request.POST.get('confirm_password')
@@ -278,14 +218,3 @@ def Update_Password(request):
     return render(request,'home/password.html',)
 
 
-
-
-
-
-
-#def password_change(request):
-#    if request.method == 'POST':
-#        form = PasswordChangeForm(user=request.user, data=request.POST)
-#        if form.is_valid():
-#            form.save()
-#            update_session_auth_hash(request, form.user)

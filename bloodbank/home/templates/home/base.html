@@ -45,6 +45,12 @@
                 <a class="nav-link" href="{% url 'home:about' %}">About</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'pathlab:index' %}">Path Lab</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'Hospitals:hospitals' %}">Hospitals</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
             </li>
             {% if user.is_authenticated %}
@@ -79,7 +85,7 @@
 {% block body %}
 {% endblock %}
 <!-- Footer -->
-
+<div style="height:300px" class="container-fluid"></div>
 <footer class="page-footer font-small pt-4m" id="footer" style="background-color: #333333;opacity:1;">
 
     <!-- Footer Links -->

@@ -88,7 +88,7 @@ class BloodCampDonor(models.Model):
     bloodcamp = models.ForeignKey(BloodCamp, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return self.firstname + " " + self.lastname
 
 
 class BloodVolunteer(models.Model):
