@@ -16,6 +16,7 @@ urlpatterns = [
     path('upload/', views.Image_Upload, name="image_upload"),
     path('update_details/', views.Update_Details, name="update_details"),
     path('update_password/', views.Update_Password, name="update_password"),
+    path('faq/', views.faq, name="faq"),
 
     re_path(r'^password_reset/$', auth_views.PasswordResetView.as_view(), name="password_reset"),
     re_path(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),

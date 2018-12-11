@@ -33,6 +33,7 @@ def index(request, req_blood):
 
             print(date.today())
             print(date)
+            print(Requestor.objects.filter(name=name, phone=phone, date=date.today()))
             if Requestor.objects.filter(name=name, phone=phone, date=date.today()).exists():
                 return render(request, 'requestblood/sorry.html',
                               {'error': 'Your request has already been sent. Please wait for donor\'s response'})
@@ -46,8 +47,10 @@ def index(request, req_blood):
 
                 for donor in query:
                     a = UserHistory.objects.filter(user=donor.user)
-                    if a[0].donation_date:
-                        if (datetime.date.today() - a[0].donation_date.date()).days > 90:
+                    recent = a.count() - 1
+
+                    if a[recent].donation_date:
+                        if (datetime.date.today() - a[recent].donation_date.date()).days > 90:
                             result |= a
                 subject = 'Request for blood'
 

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from django.urls import reverse_lazy
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
+# 'django_cron',
 INSTALLED_APPS = [
     'credits',
     'display',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +83,6 @@ WSGI_APPLICATION = 'bloodbank.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
 
 
 # DATABASES = {
@@ -151,7 +152,6 @@ MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'home/media')
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
@@ -160,3 +160,7 @@ EMAIL_HOST_USER = '29riyajain@gmail.com'
 EMAIL_HOST_PASSWORD = emailpassword
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# CRON_CLASSES = [
+#     "stock.cron.MyCronJob",
+# ]

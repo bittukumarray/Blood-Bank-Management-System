@@ -22,10 +22,18 @@ from django.utils.http import is_safe_url, urlsafe_base64_decode
 from django.contrib import messages
 
 
+# from django.shortcuts import render,get_object_or_404
+# from .models import *
+# from rest_framework.views import APIView
+# from rest_framework import status
+# from rest_framework.response import Response
+# from .serializers import UserAddressSerializer
 
 def index(request):
     return render(request,'home/index.html')
 
+def faq(request):
+    return render(request,'home/faq.html')
 
 def SignUp(request):
 
@@ -218,3 +226,9 @@ def Update_Password(request):
     return render(request,'home/password.html',)
 
 
+# class UserAddressList(APIView):
+#
+#     def get(self, request):
+#         people = UserAddress.objects.all()
+#         serializer = UserAddressSerializer(people, many=True)
+#         return Response(serializer.data)

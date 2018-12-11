@@ -95,7 +95,7 @@ class UserAddress(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, max_length=200)
     locality = models.CharField(max_length=400)
     house = models.CharField(max_length=200)
-    landmark = models.CharField(max_length=200)
+    landmark = models.CharField(null= True, blank= True, max_length=200)
     phone = models.CharField(max_length=10,
                              validators=[
                                  RegexValidator(
