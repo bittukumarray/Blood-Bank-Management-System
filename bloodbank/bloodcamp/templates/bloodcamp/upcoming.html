@@ -4,34 +4,26 @@
 
     <meta charset="utf-8">
     <title>Upcoming</title>
- <style>
-      .camps {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
+    <link rel="stylesheet" type="text/css" href="{% static "camps.css" %}">
+    <style media="screen">
+      .preregisterbtn {
+          background-color: #F28A30;
+          color: white;
+          padding: 10px 15px;
+          margin: 8px 0;
+          border: none;
+          cursor: pointer;
+          opacity: 0.9;
+      }
 
-.camps td, .camps th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-.camps tr:nth-child(even){background-color: #f2f2f2;}
-
-.camps tr:hover {background-color: #ddd;}
-
-.camps th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: 	#5B71FF;
-    color: white;
-}
-
-  </style>
+      .preregisterbtn:hover {
+          opacity: 1;
+      }
+    </style>
 {% endblock %}
   {% block body %}
-    <h1>Upcoming camps</h1>
+    <a href="{% url 'bloodcamp:camphome' %}" style="text-decoration:none;color:#701B05" ><h2>&#8592Back</h2></a>
+    <h1 class="heading">Upcoming camps</h1><br>
     {% if camps %}
     <table class="camps">
       <tr>
@@ -39,7 +31,6 @@
         <th>StartDate</th>
         <th>EndDate</th>
         <th>location</th>
-        <th>Pre-register</th>
       </tr>
       {% for camp in camps %}
         <tr>
@@ -47,12 +38,12 @@
         <td>{{ camp.startdate }}</td>
         <td>{{ camp.enddate }}</td>
         <td>{{ camp.location }}</td>
-        <td><a href="{% url 'bloodcamp:newdonorpage' %}">Pre-register</a></td>
         </tr>
       {% endfor %}
      </table>
+     <center><a href="{% url 'bloodcamp:newdonorpage' %}"><button type="button" class="preregisterbtn" name="Pre-register">Pre-Register</button></a></center>
     {% else %}
-        <p>No Upcoming Camps</p>
+        <br><br>
+        <h2>No Upcoming Camps</h2>
     {% endif %}
-    <h2><a href="{% url 'bloodcamp:camphome' %}" style="text-decoration:none">Back</a></h2>
 {% endblock %}

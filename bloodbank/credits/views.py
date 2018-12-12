@@ -46,6 +46,7 @@ def insert(request):
 				return render(request,'credits/fail1.html')
 		else:
 			return render(request,'credits/fail.html')
+	return render(request,'credits/fail.html')
 
 @login_required
 def index(request):

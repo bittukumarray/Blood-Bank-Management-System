@@ -20,3 +20,6 @@ class BloodAvailability(models.Model):
 
     def __str__(self):
         return self.blood;
+
+    def chekingblood(self):
+        return '%s, %s, %s' % (self.threshold, self.quantity, self.blood)

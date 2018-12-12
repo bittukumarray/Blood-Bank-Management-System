@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # 'django_cron',
 INSTALLED_APPS = [
     'credits',
+    'maps',
+    'Paypal',
+    'RestFramework',
     'display',
     'Hospitals.apps.HospitalsConfig',
     'finddonor.apps.FinddonorConfig',
@@ -49,7 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'rest_framework',
+    'paypal.standard.ipn',
 ]
+
+PAYPAL_TEST=True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -164,3 +170,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CRON_CLASSES = [
 #     "stock.cron.MyCronJob",
 # ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+#     )
+#  }

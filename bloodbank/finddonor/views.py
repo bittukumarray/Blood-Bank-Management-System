@@ -34,8 +34,9 @@ def index(request):
                 recent = a.count()-1
                 # print(a[0].donation_date)
 
-                print(a[recent].donation_date)
-                if a[recent].donation_date:
+                b = UserAddress.objects.get(user=a[0].user)
+                print((datetime.date.today()-b.birth).days)
+                if a[recent].donation_date and (datetime.date.today()-b.birth).days > 6570:
                     if (datetime.date.today() - a[recent].donation_date.date()).days > 90:
                         queryset |= UserAddress.objects.filter(user=donor.user)
 

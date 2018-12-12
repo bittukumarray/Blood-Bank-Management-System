@@ -25,7 +25,8 @@ def index(request, req_blood):
             city = form.cleaned_data['city']
             state = form.cleaned_data['state']
 
-            blood = request.POST.get('blood')
+            # blood = request.POST.get('blood')
+            blood =req_blood
             print(blood)
 
             if UserAddress.objects.filter(blood=blood, city=city, state=state, ).count() == 0:
@@ -49,7 +50,8 @@ def index(request, req_blood):
                     a = UserHistory.objects.filter(user=donor.user)
                     recent = a.count() - 1
 
-                    if a[recent].donation_date:
+                    b = UserAddress.objects.get(user=a[0].user)
+                    if a[recent].donation_date and (datetime.date.today()-b.birth).days > 6570:
                         if (datetime.date.today() - a[recent].donation_date.date()).days > 90:
                             result |= a
                 subject = 'Request for blood'

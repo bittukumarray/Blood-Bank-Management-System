@@ -1,7 +1,7 @@
 from django.db import models
 from home.models import UserAddress
 from django.contrib.auth.models import User
-
+from maps.models import PathlabName
 
 # Create your models here.
 
@@ -22,11 +22,14 @@ class Appointment(models.Model):
     reference_no = models.CharField(blank=False, null=False, max_length=200)
     date = models.DateField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
-    pathlab = models.CharField(max_length=30, choices=Path_labs, default='Chennai')
+    # pathlab = models.CharField(max_length=30, choices=Path_labs, default='Chennai')
+    pathlab = models.ForeignKey(PathlabName,on_delete=models.PROTECT)
 
 
     def __str__(self):
         return self.reference_no
 
+    def checkingappointment(self):
+        return '%s, %s' % (self.user.username, self.reference_no)
 
 

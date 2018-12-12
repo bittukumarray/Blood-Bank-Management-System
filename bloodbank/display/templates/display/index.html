@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
+{% extends 'home/base.html' %}
+{% load static %}
+{% block head %}
     <style>
     table {
       font-family: arial, sans-serif;
@@ -20,8 +20,8 @@
   </style>
     <meta charset="utf-8">
     <title></title>
-  </head>
-  <body>
+{% endblock %}
+{% block body %}
     <h1 style="color: hsl(0, 100%, 50%);"> History of Blood Transaction</h1>
     <table>
       <tr>
@@ -37,5 +37,5 @@
     {% endif %}
     {% endfor %}
     </table>
-  </body>
-</html>
+    <div style="height: 200px;"></div>
+{% endblock %}

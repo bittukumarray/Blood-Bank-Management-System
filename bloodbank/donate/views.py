@@ -22,7 +22,7 @@ def index(request):
 
         if form.is_valid():
             date = form.cleaned_data['date']
-            pathlab = form.cleaned_data['date']
+            pathlab = form.cleaned_data['pathlab']
             time = form.cleaned_data['time']
             refno = ref.generate_app_id()
             donor = request.user

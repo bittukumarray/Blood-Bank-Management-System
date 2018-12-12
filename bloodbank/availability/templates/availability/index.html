@@ -17,7 +17,7 @@
                 <td>{{ item.blood }}</td>
                 <td>
                     {{ item.quantity }}
-                    {% if item.quantity < 3 %}
+                    {% if item.quantity < item.threshold %}
                         <br>
                         <a href="{% url 'requestblood:index' item.blood %}" class="text-center text-danger">*Request a donor</a>
                     {% endif %}

@@ -1,7 +1,6 @@
 from datetime import date
-
-from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse
 # from django import forms
@@ -9,6 +8,7 @@ from bloodcamp.forms import newdonor, newcamp
 from . import forms
 from .models import *
 from .bloodcamps_functions import default_fun
+from django.contrib import messages
 
 
 # Create your views here.
@@ -53,8 +53,6 @@ def history(request):
                 if donor.bloodcamp.campid == camp.campid:
                     print(donor.firstname)
 
-    # print('camps:',camps)
-    # print('donors:',donors)
     content = {
         'camps': camps,
         'donors': donors,
@@ -75,8 +73,6 @@ def ongoing(request):
                 if donor.bloodcamp.campid == camp.campid:
                     print(donor.firstname)
 
-    # print('camps:',camps)
-    # print('donors:',donors)
     content = {
         'camps': camps,
         'donors': donors,
@@ -97,8 +93,6 @@ def upcoming(request):
                 if donor.bloodcamp.campid == camp.campid:
                     print(donor.firstname)
 
-    # print('camps:',camps)
-    # print('donors:',donors)
     content = {
         'camps': camps,
         'donors': donors,
@@ -120,10 +114,11 @@ def newcamppage(request):
 
 
 def newdonorpage(request):
-    form1 = newdonor()
+    form1 = newdonor('3',request.POST)
     if request.method == 'POST':
-        form1 = newdonor(request.POST)
-        if form1.is_valid():
+        bdl=BloodCampDonor.objects.values_list('email', flat=True).filter(bloodcamp=request.POST['bloodcamp'])
+        bdl=list(bdl)
+        if form1.is_valid() and request.POST['email'] not in bdl:
             form1.save(commit=True)
             firstname = form1.cleaned_data['firstname']
             lastname = form1.cleaned_data['lastname']
@@ -133,7 +128,6 @@ def newdonorpage(request):
             bloodcamp = form1.cleaned_data['bloodcamp']
             startdate = bloodcamp.startdate
             enddate = bloodcamp.enddate
-            #message = 'Dear ' + firstname + ", You have registered for the blood donation camp at "+ bloodcamp + ""
             send_mail(
                 'Blood Bank',
                 'FirstName:' + str(firstname) + '\n' +
@@ -151,5 +145,5 @@ def newdonorpage(request):
 
             return camphome(request)
         else:
-            print('form invalid')
+            messages.error(request, 'This Email already registered')
     return render(request, 'bloodcamp/newdonor.html', {'form1': form1})

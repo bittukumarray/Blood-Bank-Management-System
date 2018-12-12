@@ -17,4 +17,7 @@ class newcamp(forms.ModelForm):
 class newdonor(forms.ModelForm):
     class Meta:
         model = BloodCampDonor
-        fields = '__all__'
+        fields = ('firstname','lastname','email','phone','gender','blood','bloodcamp')
+    def __init__(self, status, *args, **kwargs):
+        super(newdonor, self).__init__(*args, **kwargs)
+        self.fields['bloodcamp'].queryset = BloodCamp.objects.filter(status=status)

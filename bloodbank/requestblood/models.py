@@ -68,3 +68,6 @@ class Requestor(models.Model):
     def __str__(self):
         return self.name + " " + self.reason
 
+    def checkingrequestor(self):
+        return '%s, %s, %s, %s' % (self.name, self.phone, self.email, self.reason)
+

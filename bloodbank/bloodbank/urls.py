@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-from home import views as people
-from availability import views as bloodstock
+from Paypal import views as pay
+
 urlpatterns = [
                   path('display/', include('display.urls')),
                   path('stock/', include('stock.urls')),
@@ -30,10 +30,15 @@ urlpatterns = [
                   path('requestblood/', include('requestblood.urls')),
                   path('availability/', include('availability.urls')),
                   path('bloodcamp/', include('bloodcamp.urls')),
-                  path('hospitals/', include('Hospitals.urls')),
+                  # path('hospitals/', include('Hospitals.urls')),
                   path('donate/', include('donate.urls')),
-                  # path('people/', people.UserAddressList.as_view(),name='people'),
-                  path('bloodstock/', bloodstock.BloodAvailabilityList.as_view(), name='bloodstock'),
-
+                  path('near-you/', include('maps.urls')),
                   re_path(r'^', include('django.contrib.auth.urls')),
+                  path('paypal/', include('paypal.standard.ipn.urls')),
+                  path('payment-button/', pay.payment_button, name='payment-button'),
+                  path('hospitals/', include('Hospitals.urls')),
+
+                  ## Rest API :
+                  path('rest/', include('RestFramework.urls'), name='rest'),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

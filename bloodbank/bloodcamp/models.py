@@ -77,6 +77,9 @@ class BloodCamp(models.Model):
         return str(self.campid) + " " + self.location
 
 
+    def checkingbloodcamp(self):
+        return self.location
+
 class BloodCampDonor(models.Model):
     firstname = models.CharField(blank=False, null=False, max_length=150)
     lastname = models.CharField(blank=False, null=False, max_length=150)
@@ -89,6 +92,10 @@ class BloodCampDonor(models.Model):
 
     def __str__(self):
         return self.firstname + " " + self.lastname
+
+    def checkingdonor(self):
+        return '%s, %s, %s, %s' % (self.firstname,
+        self.email, self.phone, self.bloodcamp)
 
 
 class BloodVolunteer(models.Model):
@@ -107,3 +114,7 @@ class BloodVolunteer(models.Model):
 
     def __str__(self):
         return self.name
+
+    def checkingvolunteer(self):
+        return '%s, %s, %s, %s' % (self.name,
+        self.email, self.phone, self.bloodcamp)

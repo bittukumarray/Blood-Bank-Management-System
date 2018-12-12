@@ -17,7 +17,7 @@ urlpatterns = [
     path('update_details/', views.Update_Details, name="update_details"),
     path('update_password/', views.Update_Password, name="update_password"),
     path('faq/', views.faq, name="faq"),
-
+    path('readmore/',views.readmore,name="readmore"),
     re_path(r'^password_reset/$', auth_views.PasswordResetView.as_view(), name="password_reset"),
     re_path(r'^password_reset/done/$', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
     re_path(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',

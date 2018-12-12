@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import send_mail, EmailMessage
+import datetime
 
 
 from django.contrib.auth import (
@@ -34,7 +35,8 @@ def index(request):
 
 def faq(request):
     return render(request,'home/faq.html')
-
+def readmore(request):
+    return render(request,'home/readmore.html')
 def SignUp(request):
 
     userform=forms.UserForm()
@@ -45,7 +47,10 @@ def SignUp(request):
     if request.method=="POST":
         userform=forms.UserForm(data = request.POST)
         useraddressform=forms.UserAddressForm(data = request.POST)
-        birth = request.POST['birth']
+        #birth = request.POST['birth']
+        #if (datetime.date.today() - birth.date()).days < 365*18 :
+        #    messages.error(request, 'You must be above 18 to donate blood')
+
 
         if userform.is_valid() and useraddressform.is_valid():
             user=userform.save(commit=False)
@@ -60,7 +65,7 @@ def SignUp(request):
                 user.is_active = False
                 user.save()
                 useraddress.user=user
-                useraddress.birth=birth
+                #useraddress.birth=birth
                 useraddress.save()
 
 
@@ -86,7 +91,7 @@ def SignUp(request):
             messages.error(request, 'This Email already exists')
             #raise Http404("Email already exists")
         else:
-            messages.error(request, 'This username already exists')
+            messages.error(request, 'Either Phone no. is not correct or This username already exists')
 
     return render(request,'home/signup.html',{'form':userform,'address':useraddressform})
 
@@ -132,7 +137,9 @@ def LogIn(request):
         user = authenticate(username=username, password=password)
 
         if user:
+            #print("user")
             if user.is_active:
+                #print("active")
                 login(request, user)
                 if 'next' in request.POST:
                     try:
@@ -141,14 +148,13 @@ def LogIn(request):
                         print('Next not found')
 
                 return HttpResponseRedirect(reverse("home:index"))
-
+            #print("yes")
+            messages.error(request, 'This user does not exist')
+            #return HttpResponseRedirect(reverse("home:login"))
 
         else:
-            return HttpResponseRedirect(reverse("home:login"))
-
-
-    else:
-        return render(request,'home/login.html',)
+            print("else")
+            messages.error(request, 'username or password does not match')
 
 
     return render(request,'home/login.html',)

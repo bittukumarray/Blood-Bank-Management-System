@@ -1,17 +1,33 @@
 {% extends 'home/base.html' %}
 {% block head %}
     <title>BloodSource | Donate</title>
+    <style media="screen">
+      .donate{
+        text-align:left;
+        font-size:20px;
+        margin: 0 auto;
+        width:500px;
+        margin: 100px
+
+      }
+      body{
+        background-color:rgba(123,12,35,0.5)
+      }
+      .btn:hover{
+      background-image:none;
+      background-color:#36688D;
+      }
+    </style>
 {% endblock %}
 {% block body %}
-    <h2 style="margin: 100px">Please fill the following details to book your appointment</h2>
-    <form method="post" action=""  style="margin: 100px">
+    <center><h1 style="margin: 100px">Book an appointment</h1>
+    <form method="post" class="donate jumbotron" style="background:white !important" >
         {% csrf_token %}
         {% for field in form %}
             <b style="color:red;">{{ field.errors }}</b>
             <label>{{ field.label_tag }}</label>
-            {{ field }}
+            {{ field }}<br>
         {% endfor %}
-        <button class="btn btn-success" type="submit">Submit</button>
-    </form>
-
+        <center><button class="btn btn-success btn-md" type="submit">Submit</button></center>
+    </form></center>
 {% endblock %}

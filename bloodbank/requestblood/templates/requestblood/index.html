@@ -1,15 +1,41 @@
 {% extends 'home/base.html' %}
 {% block head %}
 <title>Request blood</title>
+<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<style>
+.donate{
+  text-align:left;
+  font-size:20px;
+  margin: 0 auto;
+  width:500px;
+  margin: 100px
+
+}
+body{
+  background-color:rgba(123,12,35,0.5)
+}
+.btn:hover{
+background-image:none;
+background-color:#36688D;
+}
+.field{
+
+}
+.field:focus {
+  background-color: lightblue;
+}
+</style>
 {% endblock %}
 
 {% block body %}
-<h2 style="">Requestor form</h2>
-    <form action="" method="post" id="find" data-cities-url="{% url 'finddonor:ajax_load_cities' %}" style="margin: 100px;">
+<center><h1 style="margin: 100px">Requestor form</h1>
+    <form action="" class="donate jumbotron" method="post" id="find" data-cities-url="{% url 'finddonor:ajax_load_cities' %}" style="background:white !important;margin: 100px;">
     {% csrf_token %}
     {% for field in form %}
+
         {{ field.errors }}<br>
-        {{ field.label_tag }}{{ field }}
+        {{ field.label_tag }}
+        {{ field }}<br>
 
     {% endfor %}
     <label>Blood group</label>
@@ -17,7 +43,7 @@
     <br>
     <button class="btn btn-success" type="submit">Request</button>
     </form>
-
+    </center>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     {% csrf_token %}

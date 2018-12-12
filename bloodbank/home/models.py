@@ -79,6 +79,9 @@ class State(models.Model):
     def __str__(self):
         return self.name
 
+    def checkingstate(self):
+        return self.name
+
 
 class City(models.Model):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
@@ -86,6 +89,10 @@ class City(models.Model):
 
     def __str__(self):
         return self.name
+
+    def checkingcity(self):
+        return '%s, %s' % (self.name, self.state.name)
+
 
 
 class UserAddress(models.Model):
@@ -95,7 +102,7 @@ class UserAddress(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, max_length=200)
     locality = models.CharField(max_length=400)
     house = models.CharField(max_length=200)
-    landmark = models.CharField(null= True, blank= True, max_length=200)
+    landmark = models.CharField(null= True, max_length=200, blank=True)
     phone = models.CharField(max_length=10,
                              validators=[
                                  RegexValidator(
@@ -106,7 +113,7 @@ class UserAddress(models.Model):
                              ]
 
                              )
-    birth = models.DateField(default=datetime.datetime.today)
+    birth = models.DateField(null = False)
     gender = models.CharField(max_length=15, choices=Gender)
     date = models.DateTimeField(auto_now_add=True)
     blood = models.CharField(max_length=10, choices=Blood_Groups)
@@ -115,6 +122,12 @@ class UserAddress(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def checkinguser(self):
+        return '%s, %s, %s' % (self.user.username, self.user.email, self.phone)
+        #self.user.first_name, self.user.last_name, self.birth, self.phone,
+        #self.gender, self.date, self.blood,self.state.name, self.city.name)
+
 
 
 class UserProfile(models.Model):
@@ -127,6 +140,9 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def checkinguserprofile(self):
+        return '%s, %s' % (self.user.username, self.status)
 
 
 class UserHistory(models.Model):

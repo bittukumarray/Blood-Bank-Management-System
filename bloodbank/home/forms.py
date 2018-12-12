@@ -31,9 +31,10 @@ class UserForm(forms.ModelForm):
 
 
 class UserAddressForm(forms.ModelForm):
+    birth = forms.DateField(widget=forms.SelectDateWidget(years = range(1970,2001)))
     class Meta:
         model = UserAddress
-        exclude = ['user','birth']
+        exclude = ['user',]
 
 class Upload_Image(forms.ModelForm):
     class Meta:
@@ -52,5 +53,3 @@ class UploadAddress(forms.ModelForm):
     class Meta:
         model = UserAddress
         exclude = ['user','blood','gender']
-
-
