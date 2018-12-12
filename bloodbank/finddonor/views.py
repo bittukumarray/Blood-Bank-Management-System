@@ -1,24 +1,17 @@
-import datetime
-
 from django.shortcuts import render
 from home.models import UserAddress, UserHistory
 from .forms import BloodForm
 from home.models import *
-from django.http import HttpResponseRedirect, HttpResponse
 
 
 def load_cities(request):
-    # print("sdhksdsknsl")
     state_id = request.POST.get('state')
-    # print(state_id)
     cities = City.objects.filter(state_id=state_id).order_by('name')
-    # print(cities)
     return render(request, 'finddonor/dropdown.html', {'cities': cities})
 
 
 def index(request):
-    sorry = ''
-    result = ''
+
     if request.method == 'POST':
         form = BloodForm(request.POST)
 

@@ -15,7 +15,7 @@
         <div class="row">
         <div id="output" class="col-sm-7 offset-1">
         {% if result.count == 0 %}
-            <h2 style="margin-top:100px">Sorry no donors found near you</h2>
+            <h2 style="margin-top:100px">Sorry, no donors found near you !</h2>
 
         {% elif result.count > 0 and show %}
 
@@ -31,7 +31,9 @@
                     <h2>Donors near you:</h2>
                     {% for donor in result %}
 
-                        <script>address.push('{{ donor.house }}' + ', ' + '{{ donor.locality }}' + ', ' +  '{{ donor.city }}' + ', ' +  '{{ donor.state }}')</script>
+                        <script>
+                            address.push('{{ donor.house }}' + ', ' + '{{ donor.locality }}' + ', ' +  '{{ donor.city }}' + ', ' +  '{{ donor.state }}')
+                        </script>
                         <dt>{{ donor.user.username }}
                         <dd>
                             Address: {{ donor.house }},{{ donor.locality }},{{ donor.city }},{{ donor.state }}

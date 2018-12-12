@@ -22,4 +22,4 @@ def index1(request):
 		Pathlab.append(Bn[i].pathlabname)
 		latitude.append(Bn[i].latitude)
 		longitude.append(Bn[i].longitude)	
-	return render(request, 'maps/map.html',{'names':Pathlab,'lat':latitude,'lng':longitude})
+	return render(request, 'maps/map1.html',{'names':Pathlab,'lat':latitude,'lng':longitude})
